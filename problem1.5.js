@@ -13,7 +13,7 @@ pale. bale -> true
 pale. bake -> false
 */
 
-/*
+
 var str1 = "palt";
 var str2 = "palet";
 
@@ -42,7 +42,7 @@ else if( str1.length + 1 == str2.length ){
         }
         */
         
-        /*
+        
         console.log(str1 + " " + str2);
     }
     console.log("i: " + i);
@@ -68,4 +68,3 @@ else if( str1.length == str2.length + 1 ){
 else{
     console.log( "Not one away" );
 }
-*/
