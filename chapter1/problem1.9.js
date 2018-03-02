@@ -8,16 +8,18 @@ isSubstring (e.g.,"waterbottle" is a rotation of
 "erbottlewat").
 */
 
+var d = document.getElementById("p9");
+d.innerHTML += '<h2>Problem 9</h2>';
+
 var str = "waterbottle";
 var str2 = "erbottlewat";
+d.innerHTML += '<div>String 1: ' + str + '</div>';
+d.innerHTML += '<div>String 2: ' + str2 + '</div>';
 
-var result = isSubstring(str, str2);
-console.log('isSubstring: ' + result);
+var result = stringRotation(str, str2);
+d.innerHTML += '<div>String Rotation: ' + result + '</div>';
 
-function isSubstring ( str1, str2 ) {
-    console.log(str1);
-    console.log(str2);
-
+function stringRotation( str1, str2 ) {
     var order1 = str1.order;
     var order2 = str2.order;
 
@@ -25,7 +27,6 @@ function isSubstring ( str1, str2 ) {
         return true;
     }
     else{
-
         var ret = false;
 
         // both strings are same length & have same characters
@@ -45,6 +46,5 @@ function isSubstring ( str1, str2 ) {
         else{
             return false;
         }
-
     }
 };
