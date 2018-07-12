@@ -1,14 +1,13 @@
-/*
- Given a zero-indexed array A of N integers, return any
- of the indexes P of the element, which left sums of its
- left elements and right elements are equal. Sum of zero
- element is assumed to be equal to 0. This can happen if
- P = 0 or if P = N-1. For example,
- A = {-1, 3, -4, 5, 1, -6, 2, 1},
- indexes 1, 3, and 7 are valid outputs.
-*/
 
-document.write('<h2>Problem 3</h2>')
+document.write('<h2>Problem 3</h2>');
+document.write(`<b>Given a zero-indexed array A of N integers, return any
+of the indexes P of the element, which left sums of its
+left elements and right elements are equal. Sum of zero
+element is assumed to be equal to 0. This can happen if
+P = 0 or if P = N-1. For example,
+A = {-1, 3, -4, 5, 1, -6, 2, 1},
+indexes 1, 3, and 7 are valid outputs.</b>
+<br>`);
 var A = [-1, 3, -4, 5, 1, -6, 2, 1];
 
 var leftSum = 0;
