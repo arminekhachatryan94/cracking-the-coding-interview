@@ -7,6 +7,8 @@ output: integer representing the number of duplicates
 INCOMPLETE
 */
 
+document.write("<h2>Problem 1</h2>");
+
 var a = [6,1,1,2,2,2,3,6,6,8,9,10,10];
 
 a.sort( function(a,b) {
