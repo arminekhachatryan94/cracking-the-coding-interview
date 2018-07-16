@@ -14,6 +14,7 @@ class Node {
         Node * getNext();
         void printList();
         void removeDuplicates();
+        char findKthToLast(int k);
     private:
         char val;
         Node * next;
@@ -23,18 +24,26 @@ int main() {
     Node n1('1');
     Node n2('2');
     Node n3('3');
-    Node n4('2');
-    Node n5('4');
-    Node n6('1');
+    Node n4('4');
+    Node n5('5');
+    Node n6('6');
+    Node n7('7');
+    Node n8('8');
 
     n1.setNext(&n2);
     n2.setNext(&n3);
     n3.setNext(&n4);
     n4.setNext(&n5);
     n5.setNext(&n6);
+    n6.setNext(&n7);
+    n7.setNext(&n8);
 
     n1.printList();
-    n1.removeDuplicates();
+    // n1.removeDuplicates();
+    // n1.printList();
+
+    char k = n1.findKthToLast(9);
+    cout<<k<<endl;
 }
 
 Node::Node(){
@@ -77,8 +86,8 @@ void Node::printList(){
     n = this;
     cout<<"List:";
     while( n != NULL ){
-        cout<<" "<<(*n).getVal();
-        n = (*n).getNext();
+        cout<<" "<<n->val;
+        n = n->next;
     }
     cout<<endl;
 }
@@ -90,14 +99,77 @@ FOLLOW UP
 How would you solve this problem is a temporary buffer is not allowed?
 */
 void Node::removeDuplicates(){
-    char v = this->val;
-
+    // char v = this->val;
+    
     Node * n;
     n = this;
-    cout<<"List: "<<this->val;
-    while( n != NULL ){
-        cout<<" "<<(*n).getVal();
-        n = (*n).getNext();
+
+    Node * d;
+    d = this->next;
+
+    Node * p; // pointer to node before d
+    p = this;
+
+    while( n != NULL && d != NULL ){
+        while( d != NULL ){
+            cout<<"p: "<<p->val<<", d: "<<d->val<<", n: "<<n->val<<endl;
+            if( d->val == n->val ){
+                p->next = d->next;
+            }
+            p = d;
+            d = d->next;
+        }
+        cout<<endl;
+        n = n->next;
+        p = n;
+        d = p->next;
     }
-    cout<<endl;
+
+    n = this;
+    while( n != NULL && n->next != NULL ){
+        if( n->val == n->next->val ){
+            n->next = n->next->next;
+        } else {
+            n = n->next;
+        }
+    }
+
+/*     if( n->val == d->val ){
+        p->next = d->next;
+        d = d->next;
+    }
+
+    while( n != NULL && d != NULL ){
+        p = n;
+        while( d != NULL ){
+            if( d->val == v || d->val == p->val ){
+                p->next = d->next;
+                cout<<p->val<<" "<<d->val<<endl;
+            }
+            p = d;
+            d = d->next;
+        }
+        v = n->val;
+        n = n->next;
+        d = n;
+    }
+ */}
+
+/* Return Kth to Last: Implement an algorithm to
+find the kth to last element of a singly linked list. */
+char Node::findKthToLast(int k){
+    Node * n = this;
+    int len = 0;
+    while( n != NULL ){
+        len++;
+        n = n->next;
+    }
+    if( k > len ){
+        return -1;
+    }
+    n = this;
+    for( int i = 0; i < len-k; i++ ){
+        n = n->next;
+    }
+    return n->val;
 }
