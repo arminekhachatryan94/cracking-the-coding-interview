@@ -18,6 +18,7 @@ class Node {
         void setNext(Node * next);
         char getVal();
         Node * getNext();
+        void printList();
     private:
         char val;
         Node * next;
@@ -27,22 +28,17 @@ int main() {
     Node n1('1');
     Node n2('2');
     Node n3('3');
-    Node n4('4');
-    Node n5('5');
+    Node n4('2');
+    Node n5('4');
+    Node n6('1');
 
     n1.setNext(&n2);
     n2.setNext(&n3);
     n3.setNext(&n4);
     n4.setNext(&n5);
+    n5.setNext(&n6);
 
-    Node * n;
-    n = &n1;
-
-    while( n != NULL ){
-        cout<<(*n).getVal();
-        n = (*n).getNext();
-    }
-
+    n1.printList();
 }
 
 Node::Node(){
@@ -78,4 +74,15 @@ char Node::getVal(){
 
 Node * Node::getNext(){
     return this->next;
+}
+
+void Node::printList(){
+    Node * n;
+    n = this->next;
+    cout<<"List: "<<this->val;
+    while( n != NULL ){
+        cout<<" "<<(*n).getVal();
+        n = (*n).getNext();
+    }
+    cout<<endl;
 }
