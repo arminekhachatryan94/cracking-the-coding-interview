@@ -1,9 +1,3 @@
-/*
-Problem 2.1
-Remove Dups: Write code to remove duplicates from an unsorted linked list.
-FOLLOW UP
-How would you solve this problem is a temporary buffer is not allowed?
-*/
 
 #include <iostream>
 using namespace std;
@@ -19,6 +13,7 @@ class Node {
         char getVal();
         Node * getNext();
         void printList();
+        void removeDuplicates();
     private:
         char val;
         Node * next;
@@ -39,6 +34,7 @@ int main() {
     n5.setNext(&n6);
 
     n1.printList();
+    n1.removeDuplicates();
 }
 
 Node::Node(){
@@ -78,7 +74,26 @@ Node * Node::getNext(){
 
 void Node::printList(){
     Node * n;
-    n = this->next;
+    n = this;
+    cout<<"List:";
+    while( n != NULL ){
+        cout<<" "<<(*n).getVal();
+        n = (*n).getNext();
+    }
+    cout<<endl;
+}
+
+/*
+Problem 2.1
+Remove Dups: Write code to remove duplicates from an unsorted linked list.
+FOLLOW UP
+How would you solve this problem is a temporary buffer is not allowed?
+*/
+void Node::removeDuplicates(){
+    char v = this->val;
+
+    Node * n;
+    n = this;
     cout<<"List: "<<this->val;
     while( n != NULL ){
         cout<<" "<<(*n).getVal();
