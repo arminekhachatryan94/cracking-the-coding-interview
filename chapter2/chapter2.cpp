@@ -15,6 +15,7 @@ class Node {
         void printList();
         void removeDuplicates();
         char findKthToLast(int k);
+        bool deleteMiddleNode(Node & m);
     private:
         char val;
         Node * next;
@@ -42,8 +43,12 @@ int main() {
     // n1.removeDuplicates();
     // n1.printList();
 
-    char k = n1.findKthToLast(9);
-    cout<<k<<endl;
+    // char k = n1.findKthToLast(9);
+    // cout<<k<<endl;
+
+    n1.deleteMiddleNode(n8);
+    n1.printList();
+
 }
 
 Node::Node(){
@@ -155,7 +160,9 @@ void Node::removeDuplicates(){
     }
  */}
 
-/* Return Kth to Last: Implement an algorithm to
+/*
+Problem 2.2
+Return Kth to Last: Implement an algorithm to
 find the kth to last element of a singly linked list. */
 char Node::findKthToLast(int k){
     Node * n = this;
@@ -173,3 +180,26 @@ char Node::findKthToLast(int k){
     }
     return n->val;
 }
+
+/*
+Problem 2.3
+Delete Middle Node: Implement an algorithm to delete a node in the middle
+(Le., any node but the first and last node, not necessarily the exact middle)
+of a singly linked list, given only access to that node.
+
+EXAMPLE
+Input: the node c from the linked list a- >b- >c - >d - >e- >f
+Result: nothing is returned, but the new linked list looks like a->b->d->e->f
+*/
+bool Node::deleteMiddleNode(Node & m){
+    if( m.val == -1 || m.next == NULL ){
+        m = NULL;
+        return false;
+    } else {
+        Node next = *(m.next);
+        m.val = next.val;
+        m.next = next.next;
+        return true;
+    }
+}
+
