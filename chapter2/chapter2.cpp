@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <list>
 using namespace std;
 
 class Node {
@@ -20,6 +21,8 @@ class Node {
         char val;
         Node * next;
 };
+
+Node addReverseLists(Node a, Node b);
 
 int main() {
     Node n1('1');
@@ -49,6 +52,19 @@ int main() {
     n1.deleteMiddleNode(n8);
     n1.printList();
 
+    Node a1('7');
+    Node a2('1');
+    Node a3('6');
+    a1.setNext(&a2);
+    a2.setNext(&a3);
+    Node b1('5');
+    Node b2('9');
+    Node b3('2');
+    b1.setNext(&b2);
+    b2.setNext(&b3);
+
+    Node r = addReverseLists(a1, b1);
+    r.printList();
 }
 
 Node::Node(){
@@ -188,7 +204,7 @@ Delete Middle Node: Implement an algorithm to delete a node in the middle
 of a singly linked list, given only access to that node.
 
 EXAMPLE
-Input: the node c from the linked list a- >b- >c - >d - >e- >f
+Input: the node c from the linked list a->b->c->d->e->f
 Result: nothing is returned, but the new linked list looks like a->b->d->e->f
 */
 bool Node::deleteMiddleNode(Node & m){
@@ -201,5 +217,94 @@ bool Node::deleteMiddleNode(Node & m){
         m.next = next.next;
         return true;
     }
+}
+
+/*
+Problem 2.4
+Partition: Write code to partition a linked list around a value x,
+such that all nodes less than x come before all nodes greater than
+or equal to x. If x is contained within the list, the values of x
+only need to be after the elements less than x (see below). The
+partition element x can appear anywhere in the "right partition";
+it does not need to appear between the left and right partitions.
+EXAMPLE
+Input: 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1 [partition=5]
+Output: 3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8
+*/
+
+/*
+Problem 2.5
+Sum Lists: You have two numbers represented by a linked list, where
+each node contains a single digit. The digits are stored in reverse
+order, such that the 1's digit is at the head of the list. Write a
+function that adds the two numbers and returns the sum as a linked list.
+EXAMPLE
+Input: (7-> 1 -> 6) + (5 -> 9 -> 2) .That is, 617 + 295. Output:2 -> 1 -> 9.That is, 912.
+FOLLOW UP
+Suppose the digits are stored in forward order. Repeat the above problem.
+Input: (6 -> 1 -> 7) + (2 -> 9 -> 5).That is, 617 + 295. Output:9 -> 1 -> 2.That is, 912.
+*/
+
+Node addReverseLists(Node a, Node b) {
+    Node * ptr1;
+    Node * ptr2;
+
+    ptr1 = &a;
+    ptr2 = &b;
+
+    list<int> a1;
+    list<int> b1;
+
+    while( ptr1 != NULL ){
+        a1.push_front(ptr1->getVal()-'0');
+        ptr1 = ptr1->getNext();
+    }
+    cout<<endl;
+    while( ptr2 != NULL ){
+        b1.push_front(ptr2->getVal()-'0');
+        ptr2 = ptr2->getNext();
+    }
+
+    int num1 = 0;
+    int num2 = 0;
+    int sum = 0;
+    while( a1.size() != 0 ){
+        int n = a1.front();
+        a1.pop_front();
+        num1 *= 10;
+        num1 += n;
+    }
+    while( b1.size() != 0 ){
+        int n = b1.front();
+        b1.pop_front();
+        num2 *= 10;
+        num2 += n;
+    }
+    sum = num1+num2;
+
+    list<int> c1;
+    while( sum != 0 ){
+        c1.push_front((sum%10) + '0');
+        sum -= sum%10;
+        sum /= 10;
+    }
+
+    Node * head = NULL;
+    Node * tail = NULL;
+    while( c1.size() != 0 ){
+        Node * temp = new Node;
+        temp->setVal(c1.front());
+        temp->setNext(NULL);
+        c1.pop_front();
+        if( head == NULL ){
+            head = temp;
+            tail = temp;
+        } else {
+            tail->setNext(temp);
+            tail = tail->getNext();
+        }
+    }
+
+    return *head;
 }
 
