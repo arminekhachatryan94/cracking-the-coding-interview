@@ -25,6 +25,7 @@ class Node {
 
 Node addReverseLists(Node a, Node b);
 Node addForwardLists(Node a, Node b);
+bool isPalindrome(Node n);
 
 int main() {
     Node a1('6');
@@ -40,6 +41,28 @@ int main() {
 
     Node r = addForwardLists(a1, b1);
     r.printList();
+
+    // is Palindrome
+    Node * p = NULL;
+    Node * p_back = NULL;
+    for( int i = 0; i <= 6; i++ ){
+        Node * p1 = new Node;
+        if( i <= 6/2 ){
+            p1->setVal(i + '0');
+        } else {
+            p1->setVal(6-i + '0');
+        }
+        p1->setNext(NULL);
+        if( p == NULL ){
+            p = p1;
+            p_back = p1;
+        } else {
+            p_back->setNext(p1);
+            p_back = p_back->getNext();
+        }
+    }
+    (*p).printList();
+    cout<<"isPalindrome: "<<(isPalindrome(*p)? "true" : "false")<<endl;
 }
 
 Node::Node(){
@@ -323,4 +346,39 @@ Node addForwardLists(Node a, Node b) {
     }
 
     return *head;
+}
+
+/*
+2.6 Palindrome
+Implement a function to check if a linked list is a palindrome.
+*/
+bool isPalindrome(Node n){
+    Node * start;
+    start = &n;
+    int count = 0;
+    while( start != NULL ){
+        count++;
+        start = start->getNext();
+    }
+
+    start = &n;
+
+    list<char> c;
+    for( int i = 0; i < count/2; i++ ){
+        c.push_back(start->getVal());
+        start = start->getNext();
+    }
+    if( count % 2 != 0 ){
+        start = start->getNext();
+    }
+    bool ret = true;
+    for( int i = 0; i < count/2; i++ ){
+        if( c.back() != start->getVal() ){
+            ret = false;
+            break;
+        }
+        c.pop_back();
+        start = start->getNext();
+    }
+    return ret;
 }
