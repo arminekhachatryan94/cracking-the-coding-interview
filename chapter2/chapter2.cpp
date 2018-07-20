@@ -17,53 +17,28 @@ class Node {
         void removeDuplicates();
         char findKthToLast(int k);
         bool deleteMiddleNode(Node & m);
+        Node operator+ (Node const & n2);
     private:
         char val;
         Node * next;
 };
 
 Node addReverseLists(Node a, Node b);
+Node addForwardLists(Node a, Node b);
 
 int main() {
-    Node n1('1');
-    Node n2('2');
-    Node n3('3');
-    Node n4('4');
-    Node n5('5');
-    Node n6('6');
-    Node n7('7');
-    Node n8('8');
-
-    n1.setNext(&n2);
-    n2.setNext(&n3);
-    n3.setNext(&n4);
-    n4.setNext(&n5);
-    n5.setNext(&n6);
-    n6.setNext(&n7);
-    n7.setNext(&n8);
-
-    n1.printList();
-    // n1.removeDuplicates();
-    // n1.printList();
-
-    // char k = n1.findKthToLast(9);
-    // cout<<k<<endl;
-
-    n1.deleteMiddleNode(n8);
-    n1.printList();
-
-    Node a1('7');
+    Node a1('6');
     Node a2('1');
-    Node a3('6');
+    Node a3('7');
     a1.setNext(&a2);
     a2.setNext(&a3);
-    Node b1('5');
+    Node b1('2');
     Node b2('9');
-    Node b3('2');
+    Node b3('5');
     b1.setNext(&b2);
     b2.setNext(&b3);
 
-    Node r = addReverseLists(a1, b1);
+    Node r = addForwardLists(a1, b1);
     r.printList();
 }
 
@@ -154,27 +129,7 @@ void Node::removeDuplicates(){
             n = n->next;
         }
     }
-
-/*     if( n->val == d->val ){
-        p->next = d->next;
-        d = d->next;
-    }
-
-    while( n != NULL && d != NULL ){
-        p = n;
-        while( d != NULL ){
-            if( d->val == v || d->val == p->val ){
-                p->next = d->next;
-                cout<<p->val<<" "<<d->val<<endl;
-            }
-            p = d;
-            d = d->next;
-        }
-        v = n->val;
-        n = n->next;
-        d = n;
-    }
- */}
+}
 
 /*
 Problem 2.2
@@ -244,7 +199,6 @@ FOLLOW UP
 Suppose the digits are stored in forward order. Repeat the above problem.
 Input: (6 -> 1 -> 7) + (2 -> 9 -> 5).That is, 617 + 295. Output:9 -> 1 -> 2.That is, 912.
 */
-
 Node addReverseLists(Node a, Node b) {
     Node * ptr1;
     Node * ptr2;
@@ -308,3 +262,65 @@ Node addReverseLists(Node a, Node b) {
     return *head;
 }
 
+Node addForwardLists(Node a, Node b) {
+    Node * ptr1;
+    Node * ptr2;
+
+    ptr1 = &a;
+    ptr2 = &b;
+
+    list<int> a1;
+    list<int> b1;
+
+    while( ptr1 != NULL ){
+        a1.push_front(ptr1->getVal()-'0');
+        ptr1 = ptr1->getNext();
+    }
+    cout<<endl;
+    while( ptr2 != NULL ){
+        b1.push_front(ptr2->getVal()-'0');
+        ptr2 = ptr2->getNext();
+    }
+
+    int num1 = 0;
+    int num2 = 0;
+    int sum = 0;
+    while( a1.size() != 0 ){
+        int n = a1.back();
+        a1.pop_back();
+        num1 *= 10;
+        num1 += n;
+    }
+    while( b1.size() != 0 ){
+        int n = b1.back();
+        b1.pop_back();
+        num2 *= 10;
+        num2 += n;
+    }
+    sum = num1+num2;
+
+    list<int> c1;
+    while( sum != 0 ){
+        c1.push_front((sum%10) + '0');
+        sum -= sum%10;
+        sum /= 10;
+    }
+
+    Node * head = NULL;
+    Node * tail = NULL;
+    while( c1.size() != 0 ){
+        Node * temp = new Node;
+        temp->setVal(c1.front());
+        temp->setNext(NULL);
+        c1.pop_front();
+        if( head == NULL ){
+            head = temp;
+            tail = temp;
+        } else {
+            tail->setNext(temp);
+            tail = tail->getNext();
+        }
+    }
+
+    return *head;
+}
