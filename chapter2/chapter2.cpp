@@ -1,6 +1,8 @@
 
 #include <iostream>
 #include <list>
+#include <map>
+#include <iterator>
 using namespace std;
 
 class Node {
@@ -27,6 +29,7 @@ Node addReverseLists(Node a, Node b);
 Node addForwardLists(Node a, Node b);
 bool isPalindrome(Node n);
 Node intersection(Node m, Node n);
+Node loopDetection(Node n);
 
 int main() {
     Node a1('6');
@@ -72,6 +75,20 @@ int main() {
     cout<<endl<<endl<<"Intersection ";
     Node t = intersection(a1, b1);
     t.printList();
+
+    Node c1('A');
+    Node c2('B');
+    Node c3('C');
+    Node c4('D');
+    Node c5('E');
+    c1.setNext(&c2);
+    c2.setNext(&c3);
+    c3.setNext(&c4);
+    c4.setNext(&c5);
+    c5.setNext(&c3);
+
+    Node loop = loopDetection(c1);
+    cout<<"loopDetection: "<<loop.getVal()<<endl;
 }
 
 Node::Node(){
@@ -417,6 +434,33 @@ Node intersection(Node m, Node n){
             n_front = n_front->getNext();
         }
         m_front = m_front->getNext();
+    }
+    return *ret;
+}
+
+/*
+Problem 2.8
+Loop Detection: Given a circular linked list, implement an algorithm that
+returns the node at the beginning of the loop.
+DEFINITION
+Circular linked list: A (corrupt) linked list in which a node's next pointer
+points to an earlier node, so as to make a loop in the linked list.
+EXAMPLE
+Input: A -> B -> C -> D -> E -> C([thesameCasearlier) Output: C
+*/
+Node loopDetection(Node n){
+    Node * n_start = &n;
+    Node * ret = NULL;
+    map<Node *, bool> map;
+
+    while( n_start != NULL ){
+        if( map.find(n_start) != map.end() ){
+            ret = n_start;
+            break;
+        } else {
+            map.insert(make_pair(n_start, true));
+        }
+        n_start = n_start->getNext();
     }
     return *ret;
 }
