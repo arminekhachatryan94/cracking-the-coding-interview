@@ -26,18 +26,23 @@ class Node {
 Node addReverseLists(Node a, Node b);
 Node addForwardLists(Node a, Node b);
 bool isPalindrome(Node n);
+Node intersection(Node m, Node n);
 
 int main() {
     Node a1('6');
     Node a2('1');
     Node a3('7');
-    a1.setNext(&a2);
-    a2.setNext(&a3);
     Node b1('2');
     Node b2('9');
     Node b3('5');
-    b1.setNext(&b2);
+    a1.setNext(&a2);
+    b1.setNext(&a2);
+    a2.setNext(&a3);
+    a3.setNext(&b2);
     b2.setNext(&b3);
+
+    a1.printList();
+    b1.printList();
 
     Node r = addForwardLists(a1, b1);
     r.printList();
@@ -63,6 +68,10 @@ int main() {
     }
     (*p).printList();
     cout<<"isPalindrome: "<<(isPalindrome(*p)? "true" : "false")<<endl;
+
+    cout<<endl<<endl<<"Intersection ";
+    Node t = intersection(a1, b1);
+    t.printList();
 }
 
 Node::Node(){
@@ -349,8 +358,8 @@ Node addForwardLists(Node a, Node b) {
 }
 
 /*
-2.6 Palindrome
-Implement a function to check if a linked list is a palindrome.
+Problem 2.6
+Palindrome: Implement a function to check if a linked list is a palindrome.
 */
 bool isPalindrome(Node n){
     Node * start;
@@ -381,4 +390,33 @@ bool isPalindrome(Node n){
         start = start->getNext();
     }
     return ret;
+}
+
+/*
+Problem 2.7
+Intersection: Given two (singly) linked lists, determine if the
+two lists intersect. Return the intersecting node. Note that the
+intersection is defined based on reference, not value. That is, if
+the kth node of the first linked list is the exact same node (by
+reference) as the jth node of the second linked list, then they
+are intersecting.
+*/
+Node intersection(Node m, Node n){
+    Node * ret = NULL;
+    Node * m_front;
+    Node * n_front;
+    m_front = &m;
+    n_front = &n;
+    while( m_front != NULL ){
+        n_front = &n;
+        while( n_front != NULL ){
+            if( n_front == m_front ){
+                ret = n_front;
+                return *ret;
+            }
+            n_front = n_front->getNext();
+        }
+        m_front = m_front->getNext();
+    }
+    return *ret;
 }
