@@ -95,8 +95,29 @@ class SetOfStacks {
         int num_stacks;
 };
 
+/*
+Problem 3.4
+Queue via Stacks: Implement a MyQueue class which implements a queue using two stacks.
+*/
+class MyQueue {
+    public:
+        MyQueue(int capacity);
+        ~MyQueue();
+        int empty();
+        char peek();
+        int enqueue(char c);
+        char dequeue();
+        int size();
+        void print();
+    private:
+        Stack stack1; // top is front of queue
+        Stack stack2; // top is back of queue
+        int capacity;
+};
+
 int main() {
     // 3.1: Three in One
+    cout<<"3.1 - Three in One:"<<endl;
     TripleStack stack(3);
     stack.push(3, '1');
     stack.push(3, '2');
@@ -115,7 +136,10 @@ int main() {
     stack.pop(3);
     stack.printStacks();
 
+    cout<<endl<<endl;
+
     // 3.2: Stack Min
+    cout<<"3.2 - Stack Min:"<<endl;
     StackMin m(5);
     if( m.min() == '\0' ){
         cout<<"NULL"<<endl;
@@ -156,35 +180,9 @@ int main() {
     m.printStack();
 
     cout<<endl<<endl;
-    /*
-    Stack * stacks;
-    stacks = new Stack[1];
-    (*(stacks+0)).setCapacity(5);
-    (*(stacks+0)).push('1');
-    (*(stacks+0)).push('2');
-    (*(stacks+0)).push('5');
-    (*(stacks+0)).print();
-    cout<<endl;
-    stacks = new Stack[2];
-    (*(stacks+1)).setCapacity(5);
-    (*(stacks+1)).push('a');
-    (*(stacks+1)).push('b');
-    (*(stacks+1)).push('c');
-    (*(stacks+1)).push('d');
-    (*(stacks+1)).push('e');
-    (*(stacks+1)).print();
-    cout<<endl;
-    stacks = new Stack[3];
-    (*(stacks+2)).setCapacity(5);
-    (*(stacks+2)).push('v');
-    (*(stacks+2)).push('w');
-    (*(stacks+2)).push('x');
-    (*(stacks+2)).push('y');
-    (*(stacks+2)).push('z');
-    (*(stacks+2)).print();
-    */
    
-   
+    // 3.3: Stack of Plates
+    cout<<"3.3 - Stack of Plates:"<<endl;
     SetOfStacks s(5);
     s.push('a');
     s.push('b');
@@ -212,6 +210,24 @@ int main() {
     s.popAt(0);
     cout<<endl;
     s.printStacks();
+
+    cout<<endl<<endl;
+
+    // 3.4: Queue via Stacks
+    cout<<"3.4 - Queue via Stacks:"<<endl;
+    MyQueue q(6);
+    q.enqueue('a');
+    cout<<"top: "<<q.peek()<<endl;
+    q.print();
+    q.enqueue('b');
+    cout<<"top: "<<q.peek()<<endl;
+    q.print();
+    q.enqueue('c');
+    cout<<"top: "<<q.peek()<<endl;
+    q.print();
+    q.dequeue();
+    cout<<"top: "<<q.peek()<<endl;
+    q.print();
 }
 
 /* TripleStack constructor, destructor, and member function definitions */
@@ -586,4 +602,87 @@ void SetOfStacks::printStacks(){
         (*(stacks+i)).print();
         cout<<endl;
     }
+}
+
+/* MyQueue constructor, destructor, and member function definitions */
+
+MyQueue::MyQueue(int capacity){
+    this->capacity = capacity;
+    this->stack1.setCapacity(capacity);
+    this->stack2.setCapacity(capacity);
+}
+
+MyQueue::~MyQueue(){
+    this->capacity = 0;
+}
+
+int MyQueue::empty(){
+    if( this->stack1.size() == 0 && this->stack2.size() == 0 ){
+        return true;
+    }
+    return false;
+}
+
+char MyQueue::peek(){
+    if( this->empty() ){ // queue is empty
+        return '\0';
+    } else { // top of stack1 is front of queue
+        if( this->stack2.size() > this->stack1.size() ){ // set stack1 if not already set
+            while( this->stack2.top() != '\0' ){
+                this->stack1.push(this->stack2.top());
+                this->stack2.pop();
+            }
+        }
+        return this->stack1.top();
+    }
+}
+
+int MyQueue::enqueue(char c){
+    if( this->size() == this->capacity ){ // queue overflow
+        return '\0';
+    } else { // top of stack2 is back of queue
+        if( this->stack1.size() > this->stack2.size() ){ // set stack2 if not already set
+            while( this->stack1.top() != '\0' ){
+                this->stack2.push(this->stack1.top());
+                this->stack1.pop();
+            }
+        }
+        return this->stack2.push(c);
+    }
+}
+
+char MyQueue::dequeue(){
+    if( this->size() == this->capacity ){ // queue overflow
+        return '\0';
+    } else { // top of stack1 is front of queue
+        if( this->stack2.size() > this->stack1.size() ){ // set stack1 if not already set
+            while( this->stack2.top() != '\0' ){
+                this->stack1.push(this->stack2.top());
+                this->stack2.pop();
+            }
+        }
+        return this->stack1.pop();
+    }
+}
+
+int MyQueue::size(){
+    if( this->stack1.size() > this->stack2.size() ){ // stack1 is set & not empty
+        return this->stack1.size();
+    } else if( this->stack2.size() > this->stack1.size() ){ // stack2 is set & not empty
+        return this->stack2.size();
+    } else { // both stacks are empty
+        return 0;
+    }
+}
+
+void MyQueue::print(){
+    if( this->stack1.size() > this->stack2.size() ){ // set stack2 if not already set
+        while( this->stack1.top() != '\0' ){
+            this->stack2.push(this->stack1.top());
+            this->stack1.pop();
+        }
+    }
+    cout<<"<-[ ";
+    this->stack2.print();
+    cout<<"]<-"<<endl;
 }
