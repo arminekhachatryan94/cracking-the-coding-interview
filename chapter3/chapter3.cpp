@@ -115,9 +115,11 @@ class MyQueue {
         int capacity;
 };
 
+void ColorText( int color, string text );
+
 int main() {
     // 3.1: Three in One
-    cout<<"3.1 - Three in One:"<<endl;
+    ColorText(34, "3.1 - Three in One:");
     TripleStack stack(3);
     stack.push(3, '1');
     stack.push(3, '2');
@@ -139,7 +141,7 @@ int main() {
     cout<<endl<<endl;
 
     // 3.2: Stack Min
-    cout<<"3.2 - Stack Min:"<<endl;
+    ColorText(34, "3.2 - Stack Min:");
     StackMin m(5);
     if( m.min() == '\0' ){
         cout<<"NULL"<<endl;
@@ -182,7 +184,7 @@ int main() {
     cout<<endl<<endl;
    
     // 3.3: Stack of Plates
-    cout<<"3.3 - Stack of Plates:"<<endl;
+    ColorText(34, "3.3 - Stack of Plates:");
     SetOfStacks s(5);
     s.push('a');
     s.push('b');
@@ -214,7 +216,7 @@ int main() {
     cout<<endl<<endl;
 
     // 3.4: Queue via Stacks
-    cout<<"3.4 - Queue via Stacks:"<<endl;
+    ColorText(34, "3.4 - Queue via Stacks:");
     MyQueue q(6);
     q.enqueue('a');
     cout<<"top: "<<q.peek()<<endl;
@@ -228,6 +230,21 @@ int main() {
     q.dequeue();
     cout<<"top: "<<q.peek()<<endl;
     q.print();
+}
+/*
+Colors  | Text  | Background
+------------------------------
+Black   |   30  |   40
+Red     |   31  |   41
+Green   |   32  |   42
+Yellow  |   33  |   43
+Blue    |   34  |   44
+Magenta |   35  |   45
+Cyan    |   36  |   46
+White   |   37  |   47
+*/
+void ColorText( int color, string text ){
+    cout << "\033[1;"<<color<<"m"<<text<<"\033[0m\n";
 }
 
 /* TripleStack constructor, destructor, and member function definitions */
