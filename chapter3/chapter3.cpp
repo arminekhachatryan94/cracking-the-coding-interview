@@ -119,7 +119,7 @@ void ColorText( int color, string text );
 
 int main() {
     // 3.1: Three in One
-    ColorText(34, "3.1 - Three in One:");
+    ColorText(34, "3.1 - Three in One:"); cout<<endl;
     TripleStack stack(3);
     stack.push(3, '1');
     stack.push(3, '2');
@@ -141,7 +141,7 @@ int main() {
     cout<<endl<<endl;
 
     // 3.2: Stack Min
-    ColorText(34, "3.2 - Stack Min:");
+    ColorText(34, "3.2 - Stack Min:"); cout<<endl;
     StackMin m(5);
     if( m.min() == '\0' ){
         cout<<"NULL"<<endl;
@@ -178,13 +178,13 @@ int main() {
     } else {
         cout<<"min: "<<m.min()<<endl;
     }
-    cout<<"stack: ";
+    ColorText(33, "Stack: ");
     m.printStack();
 
     cout<<endl<<endl;
    
     // 3.3: Stack of Plates
-    ColorText(34, "3.3 - Stack of Plates:");
+    ColorText(34, "3.3 - Stack of Plates:"); cout<<endl;
     SetOfStacks s(5);
     s.push('a');
     s.push('b');
@@ -216,7 +216,7 @@ int main() {
     cout<<endl<<endl;
 
     // 3.4: Queue via Stacks
-    ColorText(34, "3.4 - Queue via Stacks:");
+    ColorText(34, "3.4 - Queue via Stacks:"); cout<<endl;
     MyQueue q(6);
     q.enqueue('a');
     cout<<"top: "<<q.peek()<<endl;
@@ -231,6 +231,7 @@ int main() {
     cout<<"top: "<<q.peek()<<endl;
     q.print();
 }
+
 /*
 Colors  | Text  | Background
 ------------------------------
@@ -244,7 +245,7 @@ Cyan    |   36  |   46
 White   |   37  |   47
 */
 void ColorText( int color, string text ){
-    cout << "\033[1;"<<color<<"m"<<text<<"\033[0m\n";
+    cout<<"\033[1;"<<color<<"m"<<text<<"\033[0m";
 }
 
 /* TripleStack constructor, destructor, and member function definitions */
@@ -315,15 +316,16 @@ void TripleStack::printStack(int stack){
 }
 
 void TripleStack::printStacks(){
-    cout<<"Stack 1: ";
+    // cout<<"Stack 1: ";
+    ColorText(33, "Stack 1: ");
     printStack(1);
     cout<<endl;
 
-    cout<<"Stack 2: ";
+    ColorText(33, "Stack 2: ");
     printStack(2);
     cout<<endl;
 
-    cout<<"Stack 3: ";
+    ColorText(33, "Stack 3: ");
     printStack(3);
     cout<<endl;
 }
@@ -615,7 +617,8 @@ void SetOfStacks::leftShift(int stack){
 
 void SetOfStacks::printStacks(){
     for( int i = 0; i < this->numStacks(); i++ ){
-        cout<<"stack "<<i<<": ";
+        // cout<<"stack "<<i<<": ";
+        ColorText(33, "Stack " + string(1, i+'0') + ": ");
         (*(stacks+i)).print();
         cout<<endl;
     }
@@ -693,6 +696,7 @@ int MyQueue::size(){
 }
 
 void MyQueue::print(){
+    ColorText(33, "Queue: ");
     if( this->stack1.size() > this->stack2.size() ){ // set stack2 if not already set
         while( this->stack1.top() != '\0' ){
             this->stack2.push(this->stack1.top());
