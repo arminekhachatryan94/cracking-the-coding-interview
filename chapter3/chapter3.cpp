@@ -115,6 +115,43 @@ class MyQueue {
         int capacity;
 };
 
+/*
+Problem 3.5
+Sort Stack: Write a program to sort a stack such that the smallest items are on the top.
+You can use an additional temporary stack, but you may not copy the elements into any other
+data structure (such as an array).The stack supports the following operations: push, pop,
+peek, and isEmpty.
+*/
+class IntStack {
+    public:
+        IntStack();
+        IntStack(int capacity);
+        ~IntStack();
+        void setCapacity(int capacity);
+        int push(int n);
+        int pop();
+        int top();
+        int size();
+        void print();
+    private:
+        int * stack;
+        int capacity;
+        int stack_size;
+};
+class SortStack{
+    public:
+        SortStack(int capacity);
+        ~SortStack();
+        int push(int c);
+        int pop();
+        int peek();
+        bool isEmpty();
+        void print();
+    private:
+        IntStack s1;
+        int capacity;
+};
+
 void ColorText( int color, string text );
 
 int main() {
@@ -230,6 +267,33 @@ int main() {
     q.dequeue();
     cout<<"top: "<<q.peek()<<endl;
     q.print();
+
+    cout<<endl<<endl;
+
+    // 3.5: Sort Stack
+    ColorText(34, "3.5 - Sort Stack:"); cout<<endl;
+    SortStack t(5);
+    t.push(1);
+    t.print();
+    t.push(5);
+    t.print();
+    t.push(5);
+    t.print();
+    t.push(2);
+    t.print();
+    t.push(10);
+    t.print();
+    cout<<"top: "<<t.peek()<<endl;
+    cout<<"isEmpty: "<<t.isEmpty()<<endl;
+    t.pop();
+    t.print();
+    t.pop();
+    t.print();
+    t.pop();
+    t.print();
+    t.pop();
+    t.print();
+    cout<<"isEmpty: "<<t.isEmpty()<<endl;
 }
 
 /*
@@ -706,4 +770,124 @@ void MyQueue::print(){
     cout<<"<-[ ";
     this->stack2.print();
     cout<<"]<-"<<endl;
+}
+
+/* IntStack constructor, destructor, and member function definitions */
+
+IntStack::IntStack(){
+    this->capacity = 0;
+    this->stack_size = 0;
+}
+
+IntStack::IntStack(int capacity){
+    stack = new int[capacity];
+    this->capacity = capacity;
+    this->stack_size = 0;
+    for( int i = 0; i < capacity; i++ ){
+        *(stack+i) = '\0';
+    }
+}
+
+IntStack::~IntStack(){
+    delete stack;
+    this->capacity = 0;
+    this->stack_size = 0;
+}
+
+void IntStack::setCapacity(int capacity){
+    stack = new int[capacity];
+    this->capacity = capacity;
+    this->stack_size = 0;
+    for( int i = 0; i < capacity; i++ ){
+        *(stack+i) = '\0';
+    }
+}
+
+int IntStack::push(int n){
+    if( this->size() < this->capacity ){
+        *(stack+this->size()) = n;
+        this->stack_size++;
+        return 1;
+    } else {
+        return -1; // stack overflow
+    }
+}
+
+int IntStack::pop(){
+    if( this->size() != 0 ){
+        *(stack+this->size()-1) = '\0';
+        this->stack_size--;
+        return 1;
+    } else {
+        return -1; // stack is empty
+    }
+}
+
+int IntStack::top(){
+    if( this->size() != 0 ){
+        return *(stack+this->size()-1);
+    } else {
+        return '\0'; // stack is empty
+    }
+}
+
+int IntStack::size(){
+    return this->stack_size;
+}
+
+void IntStack::print(){
+    for( int i = 0; i < this->size(); i++ ){
+        cout<<*(stack+i)<<" ";
+    }
+}
+
+/* SortStack constructor, destructor, and member function definitions */
+
+SortStack::SortStack(int capacity){
+    this->capacity = capacity;
+    this->s1.setCapacity(capacity);
+}
+
+SortStack::~SortStack(){
+    this->capacity = 0;
+    this->s1.setCapacity(0);
+}
+
+int SortStack::push(int c){
+    if( this->s1.size() == this->capacity ){
+        return -1;
+    } else {
+        IntStack temp(this->capacity);
+        while( this->s1.top() <= c && this->s1.size() != 0 ){
+            temp.push(this->s1.top());
+            this->s1.pop();
+        }
+        s1.push(c);
+        while( temp.size() != 0 ){
+            this->s1.push(temp.top());
+            temp.pop();
+        }
+        return 1;
+    }
+} // 4 3 3 1
+
+int SortStack::pop(){
+    return this->s1.pop();
+}
+
+int SortStack::peek(){
+    return this->s1.pop();
+}
+
+bool SortStack::isEmpty(){
+    if( this->s1.size() == 0 ){
+        return true;
+    }
+    return false;
+}
+
+void SortStack::print(){
+    ColorText(33, "Sorted Stack: ");
+    this->s1.print();
+    cout<<endl;
 }
