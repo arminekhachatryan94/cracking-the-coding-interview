@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <list>
+#include <time.h>
 
 using namespace std;
 
@@ -152,6 +154,48 @@ class SortStack{
         int capacity;
 };
 
+/*
+Problem 3.6
+Animal Shelter: An animal shelter, which holds only dogs and cats, operates on a strictly
+"first in, first out"basis. People must adopt either the "oldest"(based on arrival time)
+of all animals at the shelter, or they can select whether they would prefer a dog or a cat
+(and will receive the oldest animal of that type). They cannot select which specific animal
+they would like. Create the data structures to maintain this system and implement operations
+such as enqueue, dequeueAny, dequeueDog, and dequeueCat. You may use the built-in LinkedList
+data structure.
+*/
+class Animal {
+    public:
+        Animal(string type, string name);
+        ~Animal();
+        void setType(string type);
+        void setName(string name);
+        void setArrival(int arrival);
+        string getType();
+        string getName();
+        int getArrival();
+    private:
+        string type;
+        string name;
+        int arrival;
+};
+class AnimalShelter {
+    public:
+        AnimalShelter(int capacity);
+        ~AnimalShelter();
+        int enqueue(Animal a);
+        Animal dequeueAny();
+        Animal dequeueDog();
+        Animal dequeueCat();
+        int size();
+        void print();
+    private:
+        list<Animal> dogs;
+        list<Animal> cats;
+        int count;
+        int capacity;
+};
+
 void ColorText( int color, string text );
 
 int main() {
@@ -294,6 +338,18 @@ int main() {
     t.pop();
     t.print();
     cout<<"isEmpty: "<<t.isEmpty()<<endl;
+
+    cout<<endl<<endl;
+
+    ColorText(34, "3.6 - Animal Shelter"); cout<<endl;
+    AnimalShelter a1(6);
+    a1.enqueue(Animal("dog", "A"));
+    a1.enqueue(Animal("cat", "C"));
+    a1.enqueue(Animal("dog", "B"));
+    a1.print();
+    cout<<"dequeue: "<<(a1.dequeueAny()).getName()<<endl;
+    cout<<"dequeue: "<<(a1.dequeueCat()).getName()<<endl;
+    cout<<"dequeue: "<<(a1.dequeueDog()).getName()<<endl;
 }
 
 /*
@@ -889,5 +945,139 @@ bool SortStack::isEmpty(){
 void SortStack::print(){
     ColorText(33, "Sorted Stack: ");
     this->s1.print();
+    cout<<endl;
+}
+
+/* Animal constructor, destructor, and member function definitions */
+
+Animal::Animal(string type, string name){
+    this->type = type;
+    this->name = name;
+    this->arrival = 0;
+}
+
+Animal::~Animal(){
+    this->type = "";
+    this->name = "";
+}
+
+void Animal::setType(string type){
+    this->type = type;
+}
+
+void Animal::setName(string name){
+    this->name = name;
+}
+
+void Animal::setArrival(int arrival){
+    this->arrival = arrival;
+}
+string Animal::getType(){
+    return this->type;
+}
+
+string Animal::getName(){
+    return this->name;
+}
+
+int Animal::getArrival(){
+    return this->arrival;
+}
+
+/* AnimalShelter constructor, destructor, and member function definitions */
+
+AnimalShelter::AnimalShelter(int capacity){
+    this->capacity = capacity;
+    this->count = 0;
+}
+
+AnimalShelter::~AnimalShelter(){
+    this->capacity = 0;
+    this->count = 0;
+}
+
+int AnimalShelter::enqueue(Animal a){
+    if( this->size() <= this->capacity ){
+        if( a.getType() == "dog" ){
+            this->dogs.push_back(a);
+            a.setArrival(this->count);
+            count++;
+            return 1;
+        } else if( a.getType() == "cat" ){
+            this->cats.push_back(a);
+            a.setArrival(this->count);
+            count++;
+            return 1;
+        } else {
+            return -1;
+        }
+    } else {
+        return -1;
+    }
+}
+
+Animal AnimalShelter::dequeueAny(){
+    if( this->size() > 0 ){
+        if( (this->dogs).size() > 0 && (this->cats).size() == 0 ){
+            Animal ret = this->dogs.front();
+            this->dogs.pop_front();
+            return ret;
+        } else if( (this->cats).size() > 0 && (this->dogs).size() == 0 ){
+            Animal ret = this->cats.front();
+            this->cats.pop_front();
+            return ret;
+        }
+        else if( (this->dogs.front()).getArrival() <= (this->cats.front()).getArrival() ){
+            Animal ret = this->dogs.front();
+            this->dogs.pop_front();
+            return ret;
+        } else {
+            Animal ret = this->cats.front();
+            this->cats.pop_front();
+            return ret;
+        }
+    } else {
+        return Animal("", "");
+    }
+}
+
+Animal AnimalShelter::dequeueDog(){
+    if( this->dogs.size() > 0 ){
+        Animal ret = this->dogs.front();
+        this->dogs.pop_front();
+        return ret;
+    } else {
+        return Animal("", "");
+    }
+}
+
+Animal AnimalShelter::dequeueCat(){
+    if( this->cats.size() > 0 ){
+        Animal ret = this->cats.front();
+        this->cats.pop_front();
+        return ret;
+    } else {
+        return Animal("", "");
+    }
+}
+
+int AnimalShelter::size(){
+    return this->dogs.size() + this->cats.size();
+}
+
+void AnimalShelter::print(){
+    ColorText(33, "dogs: ");
+    for( int i = 0; i < this->dogs.size(); i++ ){
+        cout<<(this->dogs.front()).getName()<<" ";
+        this->dogs.push_back(this->dogs.front());
+        this->dogs.pop_front();
+    }
+    cout<<", ";
+    ColorText(33, "cats: ");
+    for( int i = 0; i < this->cats.size(); i++ ){
+        cout<<(this->cats.front()).getName()<<" ";
+        this->cats.push_back(this->cats.front());
+        this->cats.pop_front();
+    }
     cout<<endl;
 }
