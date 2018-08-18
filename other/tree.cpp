@@ -27,6 +27,7 @@ typedef struct Node {
     struct Node * rightChild;
 } Node;
 
+int longestPath(Node * head);
 void printTree( Node * head );
 
 int main() {
@@ -82,6 +83,11 @@ int main() {
 
     // printTree(head);
 
+    int sum = 0;
+
+    int path = longestPath(head);
+    cout<<path;
+
     /*
     for( int i = 0; i < A_size; i++ ){
         Node n = (*(nodes+i));
@@ -100,6 +106,12 @@ int main() {
         }
     }
     */
+}
+
+int longestPath(Node * head) {
+    int val = (*head).val;
+    Node * left = (*head).leftChild;
+    Node * right = (*head).rightChild;
 }
 
 void printTree( Node * head ){

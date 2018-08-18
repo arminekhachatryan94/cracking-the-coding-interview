@@ -25,6 +25,25 @@
         "ostream": "cpp",
         "iostream": "cpp",
         "ios": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "system_error": "cpp",
+        "limits": "cpp",
+        "chrono": "cpp",
+        "memory": "cpp",
+        "map": "cpp",
+        "__tree": "cpp",
+        "stack": "cpp",
+        "__functional_03": "cpp",
+        "functional": "cpp",
+        "ratio": "cpp",
+        "__functional_base": "cpp",
+        "atomic": "cpp",
+        "locale": "cpp",
+        "tuple": "cpp",
+        "fstream": "cpp",
+        "streambuf": "cpp",
+        "istream": "cpp",
+        "__functional_base_03": "cpp",
+        "__tuple": "cpp"
     }
 }
