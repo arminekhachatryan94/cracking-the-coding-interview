@@ -21,7 +21,6 @@ int main(){
     int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
     vector<int> a(arr, arr+sizeof(arr)/sizeof(int));
     Node * tree = MinimalTree(a);
-    printTree(tree);
 }
 
 Node * MinimalTree( vector<int> subArr){
