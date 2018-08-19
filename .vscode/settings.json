@@ -45,6 +45,7 @@
         "istream": "cpp",
         "__functional_base_03": "cpp",
         "__tuple": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "array": "cpp"
     }
 }
