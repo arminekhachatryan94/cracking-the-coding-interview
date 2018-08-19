@@ -16,7 +16,6 @@ struct Node{
 };
 
 Node * MinimalTree( vector<int> subArr);
-void printTree(Node * tree);
 
 int main(){
     int arr[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
