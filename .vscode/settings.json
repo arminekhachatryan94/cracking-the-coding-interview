@@ -25,6 +25,11 @@
         "ostream": "cpp",
         "iostream": "cpp",
         "ios": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "__tuple": "cpp",
+        "array": "cpp",
+        "__tree": "cpp",
+        "map": "cpp",
+        "stack": "cpp"
     }
 }
