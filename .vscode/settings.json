@@ -46,6 +46,8 @@
         "__functional_base_03": "cpp",
         "__tuple": "cpp",
         "array": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "new": "cpp",
+        "cmath": "cpp"
     }
 }
