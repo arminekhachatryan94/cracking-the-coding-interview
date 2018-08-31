@@ -1,69 +1,68 @@
 /*
-Problem 8.4
-Power Set: Write a method to return all subsets of a set.
+Problem 8.7
+Permutations without Dups: Write a method to compute
+all permutations of a string of unique characters.
 */
 
 #include <iostream>
 #include <queue>
 #include <vector>
+#include <string>
 
 using namespace std;
 
 struct MyComparison{
-    bool operator()( vector<char> v1, vector<char> v2 ) {
-        if(v1.size() == v2.size()){
+    bool operator()( string s1, string s2 ) {
+        if(s1.length() == s2.length()){
             int count = 0;
-            for( int i = 0; i < v1.size(); i++ ){
-                if(v1[i] != v2[i]) {
-                    return v1[i] > v2[i];
+            for( int i = 0; i < s1.length(); i++ ){
+                if(s1[i] != s2[i]) {
+                    return s1[i] > s2[i];
                 } else {
                     count++;
                 }
             }
-            return v1.size() == v2.size();
+            return s1.length() == s2.length();
         }
         else
-            return v1.size() > v2.size();
+            return s1.length() > s2.length();
     }
 };
 
-
-priority_queue< vector<char>, vector< vector<char> >, MyComparison > Permutation( vector<char> v );
+priority_queue< string, vector< string >, MyComparison > Permutation( string str );
+void getPerms(string prefix, string remainder, priority_queue< string, vector< string >, MyComparison > & ret);
 
 int main() {
-    vector<char> p;
-    p.push_back('a');
-    p.push_back('b');
-    p.push_back('c');
+    string p = "abc";
 
-    priority_queue< vector<char>, vector< vector<char> >, MyComparison > power = Permutation(p);
-
-    while( power.size() > 0 ){
-        cout<<"( ";
-        for( int i = 0; i < power.top().size(); i++ ){
-            cout<<power.top()[i]<<" ";
-        }
-        cout<<")"<<endl;
-        power.pop();
-    }
+    priority_queue< string, vector< string >, MyComparison > perms = Permutation(p);
     
+    while( perms.size() > 0 ){
+        cout<<perms.top()<<" ";
+        perms.pop();
+    }
+    cout<<endl;
 }
 
-priority_queue< vector<char>, vector< vector<char> >, MyComparison > Permutation( vector<char> v ){
-    priority_queue< vector<char>, vector< vector<char> >, MyComparison > q;
-    vector< vector<char> > s;
-    // empty set
-    vector<char> empty;
-    s.push_back(empty);
+priority_queue< string, vector< string >, MyComparison > Permutation( string str ){
+    priority_queue< string, vector< string >, MyComparison > ret;
+    
+    getPerms("", str, ret);
 
-    for( int i = 0; i < v.size(); i++ ){
-        int size = s.size();
-        for( int j = 0; j < size; j++ ){
-            vector<char> temp_set = s[j];
-            temp_set.push_back(v[i]);
-            s.push_back(temp_set);
-            q.push(temp_set);
-        }
+    return ret;
+}
+
+void getPerms(string prefix, string remainder, priority_queue< string, vector< string >, MyComparison > & ret){
+    int len = remainder.length();
+
+    if( len == 0 ){
+        ret.push(prefix);
     }
-    return q;
+    
+    for( int i = 0; i < len; i++ ){
+        string before = remainder.substr(0, i);
+        string after = remainder.substr(i+1, len);
+        char c = remainder[i];
+        getPerms(prefix + c, before + after, ret);
+    }
 }
