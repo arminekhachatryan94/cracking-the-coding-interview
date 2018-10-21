@@ -3,19 +3,19 @@ import java.util.HashMap;
 
 class Practice {
     public static void main( String[] args ) {
+        // parentD
         int[] A1 = { -1, 0, 1, 2, 3 };
+        System.out.println(Arrays.toString(parentD(2, A1)));
+
         int[] A2 = {-1, 2, 4, 1, 0 };
+        System.out.println(Arrays.toString(parentD(3, A2)));
 
-        int[] S1 = parentD(2, A1);
-        int[] S2 = parentD(3, A2);
+        // numJewelsInStones
+        String J1 = "aA", S1 = "aAAbbbb";
+        System.out.println("Jewels: " + J1 + ", Stones: " + S1 + ", count: " + numJewelsInStones(J1, S1));
 
-        System.out.println(Arrays.toString(S1));
-        System.out.println(Arrays.toString(S2));
-
-
-        String J = "aA", S = "aAAbbbb";
-        int count = numJewelsInStones(J, S);
-        System.out.println("Jewels: " + J + ", Stones: " + S + ", count: " + count);
+        String J2 = "z", S2 = "ZZ";
+        System.out.println("Jewels: " + J2 + ", Stones: " + S2 + ", count: " + numJewelsInStones(J2, S2));
     }
 
     /*
