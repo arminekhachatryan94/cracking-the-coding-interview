@@ -3,7 +3,6 @@ import java.util.HashMap;
 
 class Practice {
     public static void main( String[] args ) {
-        int D = 2;
         int[] A1 = { -1, 0, 1, 2, 3 };
         int[] A2 = {-1, 2, 4, 1, 0 };
 
