@@ -7,16 +7,17 @@ class Practice {
         int[] A1 = { -1, 0, 1, 2, 3 };
         int[] A2 = {-1, 2, 4, 1, 0 };
 
-        int[] sol = solution(3, A2);
-        printArray(sol);
+        int[] S1 = solution(2, A1);
+        int[] S2 = solution(3, A2);
+
+        System.out.println(Arrays.toString(S1));
+        System.out.println(Arrays.toString(S2));
     }
 
-    public static void printArray(int A[]){
-        for( int i = 0; i < A.length; i++ ){
-            System.out.print(A[i] + " ");
-        }
-    }
-
+    /*
+    Given an integer D and an array of integers A, find the
+    Dth parent of every element in A
+    */
     public static int[] solution(int D, int[] A){
         int[] ret = new int[A.length];
         HashMap<Integer, Integer> hash = new HashMap<>();
