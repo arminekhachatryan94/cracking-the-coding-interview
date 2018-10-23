@@ -10,6 +10,11 @@ class Practice {
         int[] A2 = {-1, 2, 4, 1, 0 };
         System.out.println(Arrays.toString(parentD(3, A2)));
 
+        // housesAndStores
+        int[] houses1 = { 1, 5, 20, 11, 16 };
+        int[] stores1 = { 5, 10, 17 };
+        System.out.println(Arrays.toString(housesAndStores(houses1, stores1)));
+
         // numJewelsInStones
         String J1 = "aA", S1 = "aAAbbbb";
         System.out.println("Jewels: " + J1 + ", Stones: " + S1 + ", count: " + numJewelsInStones(J1, S1));
@@ -54,6 +59,47 @@ class Practice {
         }
 
         return ret;
+    }
+
+    public static int[] housesAndStores(int[] houses, int[] stores) {
+        HashMap<Integer, Integer> hash = new HashMap<>();
+        for( int i = 0; i < houses.length; i++ ){
+            hash.put(houses[i], i);
+        }
+
+        // sort arrays
+        java.util.Arrays.sort(houses);
+        java.util.Arrays.sort(stores);
+
+        int[] closest = new int[houses.length];
+        int i = 0, j = 0;
+        System.out.println("here");
+
+        while( i < houses.length && j < stores.length ){
+            System.out.println(houses[i] + " " + stores[j]);
+
+            if( houses[i] == stores[j] ){
+                closest[hash.get(houses[i])] = stores[j];
+                i++;
+            } else if( houses[i] > stores[j] ){
+                j++;
+            } else if( houses[i] < stores[j] ){
+                if( j != 0 ){
+                    if( Math.abs(houses[i] - stores[j]) < Math.abs(houses[i] - stores[j-1]) ){
+                        closest[hash.get(houses[i])] = stores[j];
+                    } else {
+                        closest[hash.get(houses[i])] = stores[j-1];
+                    }
+                } else {
+                    closest[hash.get(houses[i])] = stores[j];
+                }
+                i++;
+            }
+        }
+        for( ; i < houses.length; i++ ){
+            closest[hash.get(houses[i])] = stores[stores.length-1];
+        }
+        return closest;
     }
 
     /*
