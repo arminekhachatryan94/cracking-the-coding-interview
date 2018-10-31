@@ -21,6 +21,10 @@ class Practice {
 
         String J2 = "z", S2 = "ZZ";
         System.out.println("Jewels: " + J2 + ", Stones: " + S2 + ", count: " + numJewelsInStones(J2, S2));
+
+        // lastRequest
+        int[] capacity = {5, 1, 2};
+        System.out.println("lastRequest: " + lastRequest(capacity, 2));
     }
 
     /*
@@ -61,6 +65,9 @@ class Practice {
         return ret;
     }
 
+    /*
+    Given
+    */
     public static int[] housesAndStores(int[] houses, int[] stores) {
         HashMap<Integer, Integer> hash = new HashMap<>();
         for( int i = 0; i < houses.length; i++ ){
@@ -122,5 +129,32 @@ class Practice {
         }
         
         return count;
+    }
+
+    /*
+    Given array S (capacities for servers) and a server (i):
+    Find the request which fills server i.
+    */
+    public static int lastRequest(int[] capacity, int server){
+        int server_capacity = capacity[server];
+        int total = 0;
+        for( int i = 0; i < capacity.length; i++ ){
+            if( i <= server_capacity ){
+                if( capacity[i] > server_capacity ){
+                    total += server_capacity;
+                } else {
+                    total += capacity[i];
+                }
+            } else {
+                if( capacity[i] == 0 ){
+                    ;
+                } else if( capacity[i] > server_capacity ){
+                    total += server_capacity-1;
+                } else {
+                    total += capacity[i]-1;
+                }
+            }
+        }
+        return total;
     }
 }
