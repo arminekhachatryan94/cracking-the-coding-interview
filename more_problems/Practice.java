@@ -66,7 +66,8 @@ class Practice {
     }
 
     /*
-    Given
+    Given an array of houses and an array of stores,
+    find the closest store to every house.
     */
     public static int[] housesAndStores(int[] houses, int[] stores) {
         HashMap<Integer, Integer> hash = new HashMap<>();
@@ -132,8 +133,8 @@ class Practice {
     }
 
     /*
-    Given array S (capacities for servers) and a server (i):
-    Find the request which fills server i.
+    Given array S (capacities for servers) and a server (i),
+    find the request which fills server i.
     */
     public static int lastRequest(int[] capacity, int server){
         int server_capacity = capacity[server];
