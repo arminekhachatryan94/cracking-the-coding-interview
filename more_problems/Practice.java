@@ -158,4 +158,33 @@ class Practice {
         }
         return total;
     }
+
+    /*
+    There is a robot starting at position (0, 0), the origin, on a 2D plane.
+    Given a sequence of its moves, judge if this robot ends up at (0, 0) after
+    it completes its moves.
+    The move sequence is represented by a string, and the character moves[i]
+    represents its ith move. Valid moves are R (right), L (left), U (up), and
+    D (down). If the robot returns to the origin after it finishes all of its
+    moves, return true. Otherwise, return false.
+    */
+    public boolean judgeCircle(String moves) {
+        /*
+        0 => U/D
+        1 => L/R
+        */
+        int[] m = new int[4];
+        for( int i = 0; i < moves.length(); i++ ){
+            if( moves.charAt(i) == 'U'){
+                m[0]++;
+            } else if( moves.charAt(i) == 'D' ){
+                m[0]--;
+            } else if( moves.charAt(i) == 'R' ){
+                m[1]++;
+            } else if( moves.charAt(i) == 'L' ){
+                m[1]--;
+            }
+        }
+        return (m[0] == 0 && m[1] == 0 ? true : false);
+    }
 }
