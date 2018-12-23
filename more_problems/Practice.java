@@ -25,6 +25,9 @@ class Practice {
         // lastRequest
         int[] capacity = {5, 1, 2};
         System.out.println("lastRequest: " + lastRequest(capacity, 2));
+
+        // addTwoLists(new ListNode(1), new ListNode(2));
+        
     }
 
     /*
@@ -187,4 +190,45 @@ class Practice {
         }
         return (m[0] == 0 && m[1] == 0 ? true : false);
     }
+/*
+    public class ListNode {
+        int val;
+        ListNode next;
+        ListNode(int x) { val = x; }
+    }
+
+    public ListNode addTwoLists(ListNode l1, ListNode l2) {
+        int _l1 = 0;
+        while( l1 != null ){
+            _l1 *= 10;
+            _l1 += l1.val;
+            l1 = l1.next;
+        }
+        
+        int _l2 = 0;
+        while( l2 != null ){
+            _l2 *= 10;
+            _l2 += l2.val;
+            l2 = l2.next;
+        }
+        
+        String _l3 = Integer.toString(_l1 + _l2);
+        
+        ListNode temp = new ListNode(_l3.charAt(_l3.length()-1));
+        
+        ListNode l3 = temp;
+        for( char c: new StringBuilder(_l3).reverse().toString().toCharArray() ){
+            if( c == _l3.charAt(0) ){
+                ;
+            } else {
+                ListNode t = temp;
+                temp = new ListNode(c);
+                temp.next = t;
+            }
+        }
+        
+        System.out.println(l3.val);
+        return l3;
+    }
+    */
 }
